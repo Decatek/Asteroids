@@ -1,7 +1,5 @@
 package ;
 
-
-import flash.events.KeyboardEvent;
 import flash.display.Sprite;
 import flash.events.Event;
 import openfl.Lib.getTimer;
@@ -34,7 +32,8 @@ class Main extends Sprite {
         var elapsed:Float = (lastTime - currentTime) / 1000;
         lastTime = currentTime;
 
-        player.updatePosition();
+        player.updatePosition(elapsed);
+        player.move(elapsed);
     }
     public static function get_instance():Main {
         return _instance;
