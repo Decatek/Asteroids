@@ -1,5 +1,6 @@
 package ;
 
+import flash.geom.Point;
 import flash.ui.Keyboard;
 import flash.events.KeyboardEvent;
 import flash.events.Event;
@@ -24,8 +25,15 @@ class Player extends Sprite {
     private var keyDown:Bool = false;
     private var keySpace:Bool = false;
 
+    private var position:Point;
+    private var velocity:Point;
+    private var acceleration:Point;
+
     public function new() {
         super();
+
+        velocity = new Point();
+        acceleration = new Point();
 
         addEventListener(Event.ADDED_TO_STAGE, init);
     }
@@ -39,9 +47,13 @@ class Player extends Sprite {
         b.x = -b.width / 2;
         b.y = -b.height / 2;
         addChild(b);
+        position = new Point(x, y);
     }
 
     public function updatePosition() {
+
+        position.setTo(x, y);
+
         if (!(keyLeft && keyRight)) {
             if (keyLeft)
                 steer = -1.0;
@@ -55,8 +67,12 @@ class Player extends Sprite {
     }
 
     public function move(Elapsed:Float) {
+        velocity.x += acceleration.x * Elapsed;
+        velocity.y += acceleration.y * Elapsed;
 
-
+        position += velocity * Elapsed;
+        x = position.x;
+        y = position.y;
     }
 
     public function shoot(Elapsed:Float) {
