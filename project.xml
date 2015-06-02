@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+
+    <meta title="Asteroids" package="com.decatek.asteroids" version="1.0.0" company="Decatek"/>
+    <app main="Main" path="out" file="Asteroids"/>
+
+    <source path="src"/>
+
+    <haxelib name="openfl"/>
+
+    <assets path="assets" rename="assets" exclude="openfl.svg"/>
+    <icon path="assets/openfl.svg"/>
+
+</project>
