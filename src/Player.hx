@@ -1,58 +1,79 @@
 package ;
 
-import flash.geom.Point;
 import flash.ui.Keyboard;
 import flash.events.KeyboardEvent;
 import flash.events.Event;
-import flash.display.Sprite;
 
-class Player extends Sprite {
+class Player extends Entity {
 
-    private var _path:String = 'assets/PNG/playerShip1_blue.png';
+    private var _path:String = 'playerShip1_blue';
 
     public var throttle:Float = 0.0;
     //positive number is clockwise
     public var steer:Float = 0.0;
     public var fire:Bool = false;
 
+    public static var STEER_POWER:Int = 100;
+    public static var THROTTLE_POWER:Int = 150;
 
-
-    private var position:Point;
-    private var velocity:Point;
-    private var acceleration:Point;
+    //Keyboard States
+    private var keyLeft:Bool = false;
+    private var keyRight:Bool = false;
+    private var keyUp:Bool = false;
+    private var keyDown:Bool = false;
+    private var keySpace:Bool = false;
 
     public function new() {
-        super();
-
-        velocity = new Point();
-        acceleration = new Point();
-
+        super(_path);
+        addEventListener(Event.ADDED_TO_STAGE, init);
     }
 
-    private function init(e:Event) {
-
-        position = new Point(x, y);
+    override private function init(e:Event) {
+        super.init(e);
+        Main.get_instance().stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+        Main.get_instance().stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
     }
 
-    public function updatePosition(Elapsed:Float) {
-
-        position.setTo(x, y);
-
-
+    private function onKeyDown(e:KeyboardEvent) {
+        if (e.keyCode == Keyboard.LEFT)
+            keyLeft = true;
+        else if(e.keyCode == Keyboard.RIGHT)
+            keyRight = true;
+        else if(e.keyCode == Keyboard.UP)
+            keyUp = true;
+        else if(e.keyCode == Keyboard.DOWN)
+            keyDown = true;
+        else if(e.keyCode == Keyboard.SPACE)
+            keySpace = true;
     }
 
-    public function move(Elapsed:Float) {
-        velocity.x += acceleration.x * Elapsed;
-        velocity.y += acceleration.y * Elapsed;
-
-        position.x += velocity.x * Elapsed;
-        position.y += velocity.y * Elapsed;
-
-        x = position.x;
-        y = position.y;
-
-        acceleration.setTo(0, 0);
+    private function onKeyUp(e:KeyboardEvent) {
+        if (e.keyCode == Keyboard.LEFT)
+            keyLeft = false;
+        else if(e.keyCode == Keyboard.RIGHT)
+            keyRight = false;
+        else if(e.keyCode == Keyboard.UP)
+            keyUp = false;
+        else if(e.keyCode == Keyboard.DOWN)
+            keyDown = false;
+        else if(e.keyCode == Keyboard.SPACE)
+            keySpace = false;
     }
+
+    override public function updatePosition(Elapsed:Float) {
+        rotation += Elapsed * STEER_POWER * steer;
+        var angle = Math.PI * (rotation / 180);
+
+        throttle = keyUp ? 1.0 : (keyDown ? -0.5 : 0.0);
+        steer = keyLeft ? 1.0 : (keyRight ? -1.0 : 0.0);
+        fire = keySpace;
+
+        acceleration.x += THROTTLE_POWER * throttle * Math.cos(angle);
+        acceleration.y += THROTTLE_POWER * throttle * Math.sin(angle);
+
+        super.updatePosition(Elapsed);
+    }
+
 
     public function shoot(Elapsed:Float) {
 

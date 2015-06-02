@@ -33,7 +33,6 @@ class Main extends Sprite {
         lastTime = currentTime;
 
         player.updatePosition(elapsed);
-        player.move(elapsed);
     }
     public static function get_instance():Main {
         return _instance;
