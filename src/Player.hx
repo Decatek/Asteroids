@@ -1,12 +1,13 @@
 package ;
 
+import flash.geom.Point;
 import flash.ui.Keyboard;
 import flash.events.KeyboardEvent;
 import flash.events.Event;
 
 class Player extends Entity {
 
-    private var _path:String = 'playerShip1_blue';
+    private var _path:String = 'PNG/playerShip1_blue';
 
     public var throttle:Float = 0.0;
     //positive number is clockwise
@@ -60,8 +61,15 @@ class Player extends Entity {
             keySpace = false;
     }
 
-    override public function updatePosition(Elapsed:Float) {
-        rotation += Elapsed * STEER_POWER * steer;
+    override public function update(Delta:Float) {
+        if (fire)
+            Main.get_instance().spawnLaser();
+
+        super.update(Delta);
+    }
+
+    override public function move(Delta:Float) {
+        rotation += Delta * STEER_POWER * steer;
         var angle = Math.PI * (rotation / 180);
 
         throttle = keyUp ? 1.0 : (keyDown ? -0.5 : 0.0);
@@ -70,14 +78,20 @@ class Player extends Entity {
 
         acceleration.x += THROTTLE_POWER * throttle * Math.cos(angle);
         acceleration.y += THROTTLE_POWER * throttle * Math.sin(angle);
-
-        super.updatePosition(Elapsed);
+        super.move(Delta);
     }
 
 
-    public function shoot(Elapsed:Float) {
-
+    public function shoot(Delta:Float) {
+        //TODO: implementation
     }
 
+    public function get_position():Point {
+        return new Point(x, y);
+    }
+
+    public function get_rotation():Float {
+        return this.rotation;
+    }
 
 }

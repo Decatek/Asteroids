@@ -31,7 +31,7 @@ class Entity extends Sprite {
     }
 
     private function loadGraphic() {
-        var bd:BitmapData = Assets.getBitmapData('assets/PNG/' + _name + '.png');
+        var bd:BitmapData = Assets.getBitmapData('assets/' + _name + '.png');
         var b:Bitmap = new Bitmap(bd);
     // centers the bitmap to the sprite object
         b.x = -b.width / 2;
@@ -39,9 +39,8 @@ class Entity extends Sprite {
         addChild(b);
     }
 
-    public function updatePosition(Delta : Float) {
+    public function update(Delta : Float) {
         position.setTo(x, y);
-        move(Delta);
     }
 
     private function move(Delta : Float) {
