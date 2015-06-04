@@ -18,7 +18,6 @@ class Main extends Sprite {
         super();
 
         _instance = this;
-
         spawnPlayer();
     }
 

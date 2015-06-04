@@ -63,8 +63,7 @@ class Player extends Entity {
 
     override public function update(Delta:Float) {
         if (fire)
-            Main.get_instance().spawnLaser();
-
+            shoot(Delta);
         super.update(Delta);
     }
 
@@ -84,6 +83,7 @@ class Player extends Entity {
 
     public function shoot(Delta:Float) {
         //TODO: implementation
+        Main.get_instance().spawnLaser();
     }
 
     public function get_position():Point {
