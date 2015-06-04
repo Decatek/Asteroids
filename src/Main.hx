@@ -30,10 +30,9 @@ class Main extends Sprite {
     }
 
     public function spawnLaser() {
-        var laser = new Laser(player.get_position(), player.get_rotation());
-
-        lasers.push(laser);
-        addChild(laser);
+        var laser_center = new Laser(player.get_position(), player.get_rotation());
+        lasers.push(laser_center);
+        addChild(laser_center);
     }
 
     public function removeLaser(Laser:Laser) {
