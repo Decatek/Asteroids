@@ -5,7 +5,7 @@ class Laser extends Entity {
 
     private var _path:String = "PNG/Lasers/laserBlue03";
 
-    private static var SPEED:Int = -500;
+    private static var LASER_SPEED:Int = -500;
 
     public function new(Position:Point, Rotation:Float) {
         super(_path);
@@ -16,7 +16,7 @@ class Laser extends Entity {
         rotation = Rotation;
 
         var angle : Float = Math.PI * (rotation / 180);
-        velocity = new Point( SPEED * Math.cos(angle), SPEED * Math.sin(angle) );
+        velocity = new Point( LASER_SPEED * Math.cos(angle), LASER_SPEED * Math.sin(angle) );
     }
 
     override public function update(Delta:Float) {

@@ -64,6 +64,7 @@ class Player extends Entity {
     override public function update(Delta:Float) {
         if (fire)
             shoot(Delta);
+
         super.update(Delta);
     }
 
@@ -71,6 +72,7 @@ class Player extends Entity {
         rotation += Delta * STEER_POWER * steer;
         var angle = Math.PI * (rotation / 180);
 
+        //if keyUp t=1.0, else if keyDown t=-0.5, else t=0.0
         throttle = keyUp ? 1.0 : (keyDown ? -0.5 : 0.0);
         steer = keyLeft ? 1.0 : (keyRight ? -1.0 : 0.0);
         fire = keySpace;
@@ -82,7 +84,7 @@ class Player extends Entity {
 
 
     public function shoot(Delta:Float) {
-        //TODO: implementation
+        //TODO: multi shot?
         Main.get_instance().spawnLaser();
     }
 
