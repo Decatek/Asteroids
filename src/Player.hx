@@ -36,29 +36,33 @@ class Player extends Entity {
     }
 
     private function onKeyDown(e:KeyboardEvent) {
-        if (e.keyCode == Keyboard.LEFT)
-            keyLeft = true;
-        else if(e.keyCode == Keyboard.RIGHT)
-            keyRight = true;
-        else if(e.keyCode == Keyboard.UP)
-            keyUp = true;
-        else if(e.keyCode == Keyboard.DOWN)
-            keyDown = true;
-        else if(e.keyCode == Keyboard.SPACE)
-            keySpace = true;
+        switch (e.keyCode) {
+            case Keyboard.LEFT:
+                keyLeft = true;
+            case Keyboard.RIGHT:
+                keyRight = true;
+            case Keyboard.UP:
+                keyUp = true;
+            case Keyboard.DOWN:
+                keyDown = true;
+            case Keyboard.SPACE:
+                keySpace = true;
+        }
     }
 
     private function onKeyUp(e:KeyboardEvent) {
-        if (e.keyCode == Keyboard.LEFT)
-            keyLeft = false;
-        else if(e.keyCode == Keyboard.RIGHT)
-            keyRight = false;
-        else if(e.keyCode == Keyboard.UP)
-            keyUp = false;
-        else if(e.keyCode == Keyboard.DOWN)
-            keyDown = false;
-        else if(e.keyCode == Keyboard.SPACE)
-            keySpace = false;
+        switch (e.keyCode) {
+            case Keyboard.LEFT:
+                keyLeft = false;
+            case Keyboard.RIGHT:
+                keyRight = false;
+            case Keyboard.UP:
+                keyUp = false;
+            case Keyboard.DOWN:
+                keyDown = false;
+            case Keyboard.SPACE:
+                keySpace = false;
+        }
     }
 
     override public function update(Delta:Float) {
