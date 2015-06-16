@@ -11,9 +11,10 @@ class Entity extends Sprite {
 
     private var _name:String;
 
-    private var position:Point;
     private var velocity:Point;
     private var acceleration:Point;
+
+    private var hitbox:Hitbox;
 
     public function new( BitmapName : String) {
         super();
@@ -22,25 +23,26 @@ class Entity extends Sprite {
 
         velocity = new Point();
         acceleration = new Point();
-        position = new Point();
         addEventListener(Event.ADDED_TO_STAGE, init);
     }
 
     private function init(e : Event) {
+        removeEventListener(Event.ADDED_TO_STAGE, init);
         loadGraphic();
     }
 
     private function loadGraphic() {
-        var bd:BitmapData = Assets.getBitmapData('assets/' + _name + '.png');
+        var bd:BitmapData = Assets.getBitmapData('assets/' + _name);
         var b:Bitmap = new Bitmap(bd);
     // centers the bitmap to the sprite object
         b.x = -b.width / 2;
         b.y = -b.height / 2;
+        hitbox = new Hitbox(new Point(x, y), Math.floor(Math.max(b.width, b.height) / 2.0));
         addChild(b);
     }
 
     public function update(Delta : Float) {
-        position.setTo(x, y);
+        hitbox.set_center(x, y);
     }
 
     private function move(Delta : Float) {
@@ -49,13 +51,11 @@ class Entity extends Sprite {
         velocity.x += acceleration.x * delta;
         velocity.y += acceleration.y * delta;
 
-        position.x += velocity.x * delta;
-        position.y += velocity.y * delta;
-
-        x = position.x;
-        y = position.y;
+        x += velocity.x * delta;
+        y += velocity.y * delta;
 
         acceleration.setTo(0, 0);
     }
 
+    public function get_hitbox():Hitbox { return this.hitbox; }
 }
