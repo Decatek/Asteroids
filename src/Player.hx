@@ -127,10 +127,6 @@ class Player extends Entity {
         return new Point(x, y);
     }
 
-    public function get_rotation():Float {
-        return this.rotation;
-    }
-
     public function get_hp():Int { return this.hp; }
 
 }
